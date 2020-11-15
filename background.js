@@ -21,7 +21,9 @@ chrome.runtime.onInstalled.addListener(function() {
 
   chrome.contextMenus.onClicked.addListener(function(clickData) {
     //handle context menu actions
-    const phoneUrl = new URL("https://www.truepeoplesearch.com/results?phoneno=" + clickData.selectionText);
+    let phoneNumber = libphonenumber.parsePhoneNumber(clickData.selectionText,'US');
+
+    const phoneUrl = new URL("https://www.truepeoplesearch.com/results?phoneno=" + phoneNumber.number);
     chrome.tabs.create({ url: phoneUrl.href });
     
    });
